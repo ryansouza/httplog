@@ -61,6 +61,14 @@ describe HttpLog do
 
             expect(res).to be_a adapter.response if adapter.respond_to? :response
           end
+
+          context "with binary data" do
+            let(:data) { (1...256).map {|c| c.chr(Encoding::ASCII_8BIT) }.flatten.join('') }
+
+            it "should log POST data converted to UTF-8" do
+              adapter.send_post_request
+            end
+          end
         end
       end
 
